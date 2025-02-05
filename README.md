@@ -1,4 +1,8 @@
-### Hi there 👋
+### About
+
+Estudiante de 2º de ASIR camino de las FCT.
+
+Iré subiendo aquí mis prácticas y documentación creada.
 
 <!--
 **vandreu82/vandreu82** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
