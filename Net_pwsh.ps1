@@ -1,25 +1,30 @@
-# Cambiar entre configuraciones IP
-$adapterName = "Ethernet"  # Cambia esto si tu adaptador tiene otro nombre
+# Nombre del adaptador de red
+$adapterName = "Ethernet"  # Cambia esto según el nombre de tu adaptador
 
 function Set-DHCP {
     Write-Host "Cambiando a configuración automática (DHCP)..."
-    netsh interface ip set address name="$adapterName" source=dhcp
-    netsh interface ip set dns name="$adapterName" source=dhcp
+    # IP automática
+    Set-NetIPInterface -InterfaceAlias $adapterName -Dhcp Enabled -ErrorAction SilentlyContinue
+    Remove-NetIPAddress -InterfaceAlias $adapterName -Confirm:$false -ErrorAction SilentlyContinue
+    # DNS automático
+    Set-DnsClientServerAddress -InterfaceAlias $adapterName -ResetServerAddresses
 }
 
 function Set-Static1 {
     Write-Host "Cambiando a configuración IP fija #1..."
-    netsh interface ip set address name="$adapterName" static 192.168.1.100 255.255.255.0 192.168.1.1
-    netsh interface ip set dns name="$adapterName" static 8.8.8.8
+    # IP fija
+    New-NetIPAddress -InterfaceAlias $adapterName -IPAddress 192.168.1.100 -PrefixLength 24 -DefaultGateway 192.168.1.1 -ErrorAction SilentlyContinue
+    # DNS fijo
+    Set-DnsClientServerAddress -InterfaceAlias $adapterName -ServerAddresses 8.8.8.8
 }
 
 function Set-Static2 {
     Write-Host "Cambiando a configuración IP fija #2..."
-    netsh interface ip set address name="$adapterName" static 10.0.0.100 255.255.255.0 10.0.0.1
-    netsh interface ip set dns name="$adapterName" static 1.1.1.1
+    New-NetIPAddress -InterfaceAlias $adapterName -IPAddress 10.0.0.100 -PrefixLength 24 -DefaultGateway 10.0.0.1 -ErrorAction SilentlyContinue
+    Set-DnsClientServerAddress -InterfaceAlias $adapterName -ServerAddresses 1.1.1.1
 }
 
-# Menú de selección
+# Menú
 Write-Host "Selecciona la configuración de red:"
 Write-Host "1. DHCP (automática)"
 Write-Host "2. IP Fija #1 (192.168.1.100)"
