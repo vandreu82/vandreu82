@@ -1,6 +1,6 @@
 ### About
 
-Estudiante de 2º de ASIR camino de las FCT.
+Graduado en ASIR, cursando actualmente el master de ciberseguridad.
 
 Iré subiendo aquí mis prácticas y documentación creada.
 
